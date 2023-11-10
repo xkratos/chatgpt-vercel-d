@@ -254,9 +254,11 @@ export const post: APIRoute = async ({ request }) => {
       },
       method: 'POST',
       body: JSON.stringify({
+        model: "dall-e-3",
         prompt,
         size,
         n,
+        quality: "hq"
       }),
     });
     const data = await image.json();
