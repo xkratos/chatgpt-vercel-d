@@ -258,7 +258,7 @@ export const post: APIRoute = async ({ request }) => {
         prompt,
         size,
         n,
-        quality: 'hq'
+        quality: 'hq',
       }),
     });
     const data = await image.json();
