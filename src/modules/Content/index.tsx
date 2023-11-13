@@ -287,7 +287,7 @@ const Content: FC<ContentProps> = ({ setActiveSetting }) => {
         method: 'POST',
         body: JSON.stringify(params),
         headers: {
-          Authorization: model === 'Midjourney' ? configs.discordToken : '',
+          Authorization: 'Basic ' + btoa('chatgpt' + ':' + configs.password),
         },
       });
       const { data = [], msg } = await res.json();
