@@ -143,7 +143,12 @@ export const post: APIRoute = async ({ request }) => {
   } = body;
 
   if (basicAuth === "true" && !request.headers.get("authorization")) {
-    throw new Error("请使用正确的URL访问本网站。")
+    return new Response(
+      JSON.stringify({ msg: 'No password or wrong password' }),
+      {
+        status: 401,
+      }
+    );
   }
 
   if (basicAuth === "true") {
@@ -152,9 +157,12 @@ export const post: APIRoute = async ({ request }) => {
     const decoded = atob(encoded)
     const [username, userPassword] = decoded.split(":")
     if (username !== usernameSet || userPassword !== pwd) {
-      throw new Error(
-        "密码错误，请联系网站管理员, 请使用正确的URL访问本网站。"
-      )
+      return new Response(
+        JSON.stringify({ msg: 'No password or wrong password' }),
+        {
+          status: 401,
+        }
+      );
     }
   }
 
