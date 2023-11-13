@@ -27,6 +27,8 @@ export const apiKeyStrategy: StrategyMode =
   import.meta.env.API_KEY_STRATEGY || process.env.API_KEY_STRATEGY || 'random';
 
 export const password = import.meta.env.PASSWORD || process.env.PASSWORD;
+export const usernameSet = process.env.USERNAME || "chatgpt"
+export const basicAuth = process.env.BASIC_AUTH || "false"
 
 // model midjourney configs
 export const dicordServerId =

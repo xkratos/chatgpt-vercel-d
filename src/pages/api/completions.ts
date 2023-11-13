@@ -5,7 +5,7 @@ import { createParser } from 'eventsource-parser';
 import { defaultModel, supportedModels } from '@configs';
 import { Message } from '@interfaces';
 import { loadBalancer } from '@utils/server';
-import { apiKeyStrategy, apiKeys, baseURL, config, password as pwd } from '.';
+import { apiKeyStrategy, apiKeys, baseURL, config, password as pwd, basicAuth, usernameSet } from '.';
 
 export { config };
 
@@ -27,7 +27,23 @@ export const post: APIRoute = async ({ request }) => {
 
   model = model || defaultModel;
 
-  if (pwd && password !== pwd) {
+  if (basicAuth === "true" && !request.headers.get("authorization")) {
+    throw new Error("请使用正确的URL访问本网站。")
+  }
+
+  if (basicAuth === "true") {
+    const auth = request.headers.get("authorization")!
+    const encoded = auth.split(" ")[1]
+    const decoded = atob(encoded)
+    const [username, userPassword] = decoded.split(":")
+    if (username !== usernameSet || userPassword !== pwd) {
+      throw new Error(
+        "密码错误，请联系网站管理员, 请使用正确的URL访问本网站。"
+      )
+    }
+  }
+
+  if (basicAuth === "false" && pwd && password !== pwd) {
     return new Response(
       JSON.stringify({ msg: 'No password or wrong password' }),
       {
