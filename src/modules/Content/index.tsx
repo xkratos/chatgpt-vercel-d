@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+/* eslint-disable */
 import { FC, useContext, useEffect, useState } from 'react';
 import MessageBox from '@components/MessageBox';
 import { Message, ReactSetState } from '@interfaces';
